@@ -54,17 +54,15 @@
     host.innerHTML =
       `<div class="ish-logo"><button type="button" class="ish-burger" data-act="colapsar" aria-label="${colapsado ? 'Expandir menú' : 'Colapsar menú'}" aria-pressed="${colapsado}">${I.menu}</button>` +
         `<img class="ish-img" src="${base}/assets/logos/mindeporte.svg" alt="Ministerio del Deporte"><div class="ish-sep"></div><img class="ish-img" src="${base}/assets/logos/suid.png" alt="SUID"></div>` +
-      `<nav class="ish-nav">${NAV.map((g) => `<div class="ish-section">${esc(g.s)}</div>` + g.c.map(row).join('')).join('')}</nav>` +
-      `<div class="ish-bottom"><a class="ish-row" href="${base}/" data-go="/" title="Cambiar de evento" aria-label="Cambiar de evento"><div class="ish-icon">${I.out}</div><span class="ish-lbl">Cambiar de evento</span></a></div>`;
+      `<nav class="ish-nav">${NAV.map((g) => `<div class="ish-section">${esc(g.s)}</div>` + g.c.map(row).join('')).join('')}</nav>`;
   };
   const pintarTop = () => {
     top.innerHTML =
       `<div class="ish-bellw"><button type="button" class="ish-bell" data-act="avisos" aria-haspopup="dialog" aria-expanded="false" aria-label="Notificaciones">${I.bell}</button>` +
         `<div class="ish-dd ish-avisos" role="dialog" aria-label="Notificaciones" hidden><h2>Notificaciones</h2><p>No tienes notificaciones.</p></div></div>` +
-      `<div class="ish-user"><button type="button" class="ish-chip" data-act="usuario" aria-haspopup="menu" aria-expanded="false">` +
+      `<div class="ish-user"><div class="ish-chip ish-chip--fijo">` +
         `<div class="ish-ava"><div class="ish-ring">DN</div><div class="ish-dot"></div></div>` +
-        `<div class="ish-info"><span class="ish-name">Demo Naowee</span><span class="ish-role">Administrador</span></div><span class="ish-chev">${I.down}</span></button>` +
-        `<div class="ish-dd" role="menu" hidden><div class="ish-dd-label">Mi cuenta</div><a class="ish-dd-item" role="menuitem" href="${base}/" data-go="/">${I.swap}<span>Cambiar de evento</span></a></div></div>`;
+        `<div class="ish-info"><span class="ish-name">Demo Naowee</span><span class="ish-role">Administrador</span></div></div>`;
     pie.innerHTML = `<img src="${base}/assets/logos/naowee.svg" alt="Naowee" height="24"><span class="ish-sep" aria-hidden="true"></span><span>Todos los derechos reservados © 2026</span>`;
   };
 
@@ -77,7 +75,7 @@
     const nav = t.closest('[data-go]');
     if (nav && (host.contains(nav) || top.contains(nav))) { e.preventDefault(); cerrar(); if (rel() !== nav.dataset.go) go(nav.dataset.go); return; }
     if (t.closest('[data-act=colapsar]')) { colapsado = !colapsado; try { localStorage.setItem(KEY, colapsado ? '1' : '0'); } catch (x) {} pintar(); return; }
-    const b = t.closest('[data-act=avisos],[data-act=usuario]');
+    const b = t.closest('[data-act=avisos]');
     if (b && top.contains(b)) {
       const panel = b.nextElementSibling, abrir = panel.hidden;
       cerrar(); panel.hidden = !abrir; b.setAttribute('aria-expanded', String(abrir)); return;

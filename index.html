@@ -1,13 +1,10 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Demo · Acreditaciones</title>
-<script>
-// Base de la app: sirve igual en localhost y bajo /design-demo-acreditaciones/ de GitHub Pages.
-var m=location.pathname.match(/^(.*?)(\/(parametrization|delivery|validation|profile)(\/.*)?)?$/);
-window.__BASE__=(m[1]||'').replace(/\/$/,'');
-document.write('<base href="'+(window.__BASE__||'')+'/">');
-</script>
-<link rel="stylesheet" href="assets/styles.css"><link rel="stylesheet" href="assets/components.css"><link rel="stylesheet" href="assets/icons.css">
-<link rel="stylesheet" href="assets/sidebar.css"><link rel="stylesheet" href="assets/google-sans.css"><link rel="stylesheet" href="assets/sidebar-real.css"><link rel="stylesheet" href="assets/app.css"><link rel="stylesheet" href="assets/shell.css"><link rel="stylesheet" href="assets/resumen.css">
-<style>html,body{margin:0;min-height:100%}body{display:flex;min-height:100vh}#sidebar{flex:none;display:flex}#sidebar .ns-sidebar{height:auto;min-height:100vh}#root{flex:1;min-width:0}</style>
-</head><body><div id="sidebar"></div><div id="root"></div><script type="module" src="assets/app.js"></script><script src="assets/shell.js"></script><script src="assets/resumen.js"></script></body></html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Acreditaciones · Naowee</title>
+<meta http-equiv="refresh" content="0;url=web/?app=acreditaciones">
+<script>location.replace("web/?app=acreditaciones" + location.hash);</script>
+</head>
+<body><p><a href="web/?app=acreditaciones">Abrir la demo de Acreditaciones</a></p></body>
+</html>

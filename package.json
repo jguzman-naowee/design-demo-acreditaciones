@@ -1,0 +1,11 @@
+{
+  "name": "design-demo-acreditaciones",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "nueva-app": "node scripts/nueva-app.mjs",
+    "registrar": "node scripts/registrar.mjs",
+    "build": "node scripts/build.mjs"
+  }
+}

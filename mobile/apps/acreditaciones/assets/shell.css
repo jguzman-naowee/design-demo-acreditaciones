@@ -94,3 +94,7 @@ html.con-shell .nwt-stat-card__hint{font-size:12px;line-height:1.4;color:var(--i
 html.con-shell .nwt-stat-card__icon{position:absolute;top:18px;right:20px;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 html.con-shell .nwt-stat-card__icon .nwt-icon{display:flex}
 @media (prefers-reduced-motion:reduce){html.con-shell .nwt-stat-card{transition:none}html.con-shell .nwt-stat-card:hover{transform:none}}
+
+/* Chip de usuario sin menú (ya no hay «Cambiar de evento»): no es interactivo */
+.ish-chip--fijo{cursor:default}
+.ish-chip--fijo:hover{background:inherit;border-color:inherit}

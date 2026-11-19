@@ -14,7 +14,7 @@ const { sassPlugin } = req('esbuild-sass-plugin');
 await esbuild.build({
   entryPoints: [path.join(root, 'src/main.tsx')],
   bundle: true, format: 'esm', jsx: 'automatic', minify: true,
-  outfile: path.join(root, 'assets/app.js'),
+  outfile: path.join(root, 'mobile/apps/acreditaciones/assets/app.js'),
   nodePaths: [path.join(MF, 'node_modules')],
   tsconfig: path.join(MF, 'tsconfig.app.json'),
   loader: { '.svg': 'dataurl', '.png': 'dataurl', '.woff2': 'dataurl', '.woff': 'dataurl', '.ttf': 'dataurl' },
@@ -26,4 +26,4 @@ await esbuild.build({
   },
   logLevel: 'warning'
 });
-console.log('Listo: assets/app.js y assets/app.css');
+console.log('Listo: mobile/apps/acreditaciones/assets/app.js y app.css');

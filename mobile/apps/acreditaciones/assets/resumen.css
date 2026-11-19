@@ -317,3 +317,62 @@ html.con-shell:not(.shell-listo) #resumen-a{transition:none}
 #resumen-a .nws-summary__table .nwt-progress-bar__fill{background:var(--naotech-color-blue-700,#1f78d1)}
 /* La sombra de la tarjeta seguía un rectángulo de esquinas rectas: el contenedor toma el mismo radio que el borde interior */
 #resumen-a .nwt-card{border-radius:20px}
+
+/* ───────── Vista B «Con todos los datos» ───────── */
+.rsa-head{align-items:flex-start;gap:12px}
+.rsa-head__tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rsa-vista{display:inline-flex;gap:4px;padding:4px;border-radius:10px;background:var(--naotech-color-gray-100,#f4f5fa)}
+.rsa-vista button{min-height:36px;padding:0 14px;border:0;border-radius:8px;background:transparent;color:var(--naotech-color-gray-600,#646587);font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
+.rsa-vista button[aria-pressed=true]{background:#fff;color:var(--naotech-color-gray-900,#282834);box-shadow:0 1px 3px rgba(40,40,52,.14)}
+.rsa-vista button:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+.rsa-note{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;padding:12px 16px;border-radius:12px;font-size:13px}
+.rsa-note--b{background:var(--naotech-color-blue-050,#eef0ff);color:var(--naotech-color-blue-900,#2a3bb0)}
+.rsa-stats--6{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:899px){.rsa-stats--6{grid-template-columns:1fr}}
+.rsa-leg{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0;padding:0;list-style:none;font-size:12px;color:var(--naotech-color-gray-700,#43445e)}
+.rsa-leg li{display:inline-flex;align-items:center;gap:6px}
+.rsa-leg span{color:var(--naotech-color-gray-600,#646587)}
+.rsa-leg--top{margin-top:2px}
+#resumen-a .nws-summary__table-head{align-items:flex-start}
+.rsa-mini{flex:1;display:flex;height:8px;border-radius:4px;background:var(--naotech-color-gray-200,#e7e9f3);overflow:hidden;min-width:60px}
+.rsa-mini span{display:block;height:100%}
+.rsa-muted{color:var(--naotech-color-gray-600,#646587)}
+.rsa-strong{font-weight:600}
+.rsa-d__kpis--4{grid-template-columns:1.1fr 1fr 1fr 1fr}
+.rsa-d__sub{font-size:12px;font-weight:600;color:var(--naotech-color-gray-600,#646587)}
+.rsa-d__roles--4 .rsa-d__rhead,.rsa-d__roles--4 .rsa-d__rrow{grid-template-columns:2fr 1fr 1fr 1fr 1fr}
+.rsa-d__bar span[data-tip]:hover{filter:brightness(1.12)}
+.rsa-foot{margin:0;padding-top:10px;border-top:1px solid var(--naotech-color-gray-200,#e7e9f3);font-size:12px;color:var(--naotech-color-gray-600,#646587)}
+/* B: el estado de los 9 números cabe en la tarjeta de la tabla */
+#resumen-a .nws-summary__table .nwt-datatable__title{padding-left:10px;padding-right:10px}
+
+/* Vista B: los seis indicadores en una sola fila, más compactos */
+.rsa-stats--6{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+html.con-shell .rsa-stats--6 .nwt-stat-card{padding:14px 14px 16px;border-radius:14px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__content{gap:8px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__label{padding-right:36px;min-height:32px;font-size:10.5px;letter-spacing:.3px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__value{font-size:24px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__hint{font-size:11.5px;line-height:1.35}
+html.con-shell .rsa-stats--6 .nwt-stat-card__icon{top:12px;right:12px;width:30px;height:30px;border-radius:8px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__icon .nwt-icon{transform:scale(.8)}
+@media (max-width:1199px){.rsa-stats--6{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:899px){.rsa-stats--6{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Limpiar filtros: alineado a la derecha de la tarjeta de filtros */
+.rsa-filters{align-items:flex-end}
+.rsa-clear{margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--naotech-color-orange-700,#d74009);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.rsa-clear:hover:not(:disabled){text-decoration:underline}
+.rsa-clear:disabled{color:var(--naotech-color-gray-500,#9a9bb8);cursor:not-allowed}
+.rsa-clear:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+
+/* Cabecera: estado junto al nombre del evento y botón «Descargar informe» a la derecha */
+.rsa-evline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rsa-dl{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:8px;background:#fff;color:var(--naotech-color-gray-900,#282834);font:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:border-color .15s,background .15s}
+.rsa-dl svg{color:var(--naotech-color-gray-600,#646587)}
+.rsa-dl:hover{border-color:var(--naotech-color-gray-600,#646587);background:var(--naotech-color-gray-050,#fafbfd)}
+.rsa-dl:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+/* Descargar informe: botón primario naranja */
+.rsa-dl{border-color:transparent;background:var(--naotech-color-orange-700,#d74009);color:#fff}
+.rsa-dl svg{color:#fff}
+.rsa-dl:hover{border-color:transparent;background:var(--naotech-color-orange-800,#b53607)}
+.rsa-dl:focus-visible{outline-color:var(--naotech-color-orange-800,#b53607)}
