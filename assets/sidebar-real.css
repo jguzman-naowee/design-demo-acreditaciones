@@ -1,0 +1,18 @@
+/* Ajuste del ns-sidebar a lo que pinta Sports en producción (medido sobre captura, nov-2026). */
+.ns-sidebar,.ns-sidebar *{box-sizing:border-box}
+.ns-sidebar{border-right-color:#e6e9f3;font-family:'Google Sans',-apple-system,BlinkMacSystemFont,sans-serif}
+.ns-sidebar__menu-section{padding:14px 20px 4px}
+.ns-sidebar__menu-section:first-child{padding-top:0}
+.ns-sidebar__menu-title{padding:0;font-family:inherit;font-size:12px;font-weight:600;line-height:16px;letter-spacing:.01em;text-transform:uppercase;color:#898bae}
+.ns-sidebar__menu-link{height:auto;min-height:42px;padding:0 22px 0 0;font:inherit;color:inherit}
+.ns-sidebar__menu-content{padding-left:20px;gap:12px}
+.ns-sidebar__submenu-list .ns-sidebar__menu-link{padding-left:36px}
+.ns-sidebar__menu-label{font-family:inherit;font-size:15px;font-weight:500;line-height:20px;color:#646587;padding:3px 0}
+.ns-sidebar__menu-link--active .ns-sidebar__menu-label,
+.ns-sidebar__menu-item--has-children:not(.ns-sidebar__menu-item--expanded)>.ns-sidebar__menu-link .ns-sidebar__menu-label{color:#282834}
+.ns-sidebar__menu-arrow{color:#646587;transform:rotate(0)}
+.ns-sidebar__menu-arrow--expanded{transform:rotate(90deg)}
+.ns-sidebar__menu-indicator{left:16px;height:28px;border-radius:2px}
+/* Pedido de diseño (DC-001/002): hijos en regular y padres siempre oscuros. */
+.ns-sidebar__submenu-list .ns-sidebar__menu-label{font-weight:400}
+.ns-sidebar__menu-link--parent .ns-sidebar__menu-label{color:#282834}

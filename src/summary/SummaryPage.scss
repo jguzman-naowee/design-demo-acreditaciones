@@ -1,0 +1,217 @@
+.nws-summary {
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--naotech-sizing-16);
+  }
+
+  &__overall {
+    display: flex;
+    flex-direction: column;
+    gap: var(--naotech-sizing-12);
+  }
+
+  &__overall-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--naotech-sizing-8);
+    color: var(--naotech-app-color-800);
+  }
+
+  &__progress {
+    display: flex;
+    align-items: center;
+    gap: var(--naotech-sizing-8);
+    width: 100%;
+
+    .nwt-progress-bar {
+      flex: 1;
+    }
+
+    > span {
+      min-width: 2.75rem;
+      text-align: right;
+    }
+  }
+
+  &__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--naotech-sizing-8);
+  }
+
+  // Los números se leen mejor centrados bajo su encabezado (DC-003).
+  .nwt-datatable__title.nws-summary__center,
+  .nwt-datatable__cell.nws-summary__center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  // La tabla va a ras de la tarjeta (DC-005); las notas conservan su aire.
+  &__table .nwt-card__content {
+    padding: 0;
+  }
+
+  // Patrón cebra (DC-004) por clase: las filas de detalle romperían el nth-child.
+  &__odd {
+    background: var(--naotech-app-color-100);
+  }
+
+  &__table-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: calc(var(--naotech-sizing-12) * -1);
+  }
+
+  &__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--naotech-sizing-8);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--naotech-primary-color-normal);
+      outline-offset: 2px;
+    }
+  }
+
+  &__chevron {
+    --naotech-icon-dimension: var(--naotech-sizing-16);
+
+    transition: transform 0.15s ease;
+  }
+
+  &__open &__chevron {
+    transform: rotate(90deg);
+  }
+
+  // El datatable pinta las filas como flex: la celda de detalle tiene que ocupar todo el ancho.
+  &__detail {
+    display: flex;
+  }
+
+  &__detail > td {
+    flex: 1;
+    padding: var(--naotech-sizing-16) var(--naotech-sizing-24) var(--naotech-sizing-20) var(--naotech-sizing-40);
+    border-bottom: 1px solid var(--naotech-app-color-200);
+    background: var(--naotech-app-background);
+  }
+
+  &__detail-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--naotech-sizing-12);
+  }
+
+  &__stack {
+    display: flex;
+    height: var(--naotech-sizing-12);
+    overflow: hidden;
+    border-radius: var(--naotech-sizing-6);
+    background: var(--naotech-app-color-200);
+  }
+
+  &__stack-part {
+    &--printed {
+      background: var(--naotech-positive-color-500);
+    }
+
+    &--to-print {
+      background: var(--naotech-informative-color-500);
+    }
+
+    &--to-fix {
+      background: var(--naotech-warning-color-500);
+    }
+  }
+
+  &__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--naotech-sizing-8) var(--naotech-sizing-24);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--naotech-sizing-14);
+    color: var(--naotech-app-color-800);
+
+    li {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--naotech-sizing-6);
+    }
+  }
+
+  &__dot {
+    width: var(--naotech-sizing-10);
+    height: var(--naotech-sizing-10);
+    border-radius: 50%;
+  }
+
+  &__metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 14rem));
+    gap: var(--naotech-sizing-12);
+  }
+
+  &__metric {
+    display: flex;
+    flex-direction: column;
+    gap: var(--naotech-sizing-2);
+    padding: var(--naotech-sizing-12);
+    border: 1px solid var(--naotech-app-color-200);
+    border-radius: var(--naotech-sizing-8);
+  }
+
+  &__metric-label,
+  &__metric-hint {
+    font-size: var(--naotech-sizing-12);
+    color: var(--naotech-app-color-600);
+  }
+
+  &__metric-value {
+    font-size: var(--naotech-sizing-20);
+    font-weight: 700;
+    color: var(--naotech-app-color-900);
+  }
+
+  &__detail-warn {
+    display: flex;
+    align-items: center;
+    gap: var(--naotech-sizing-8);
+    margin: 0;
+    font-size: var(--naotech-sizing-12);
+    color: var(--naotech-app-color-800);
+  }
+
+  &__muted {
+    color: var(--naotech-app-color-500);
+  }
+
+  // La fila de totales cierra la tabla como en la planilla: en negrita y separada.
+  &__total {
+    border-top: 2px solid var(--naotech-app-color-200);
+
+    .nwt-datatable__cell span {
+      font-weight: 700;
+    }
+  }
+
+  &__notes {
+    margin: 0;
+    padding: var(--naotech-sizing-16) var(--naotech-sizing-16) var(--naotech-sizing-16) var(--naotech-sizing-36);
+    color: var(--naotech-app-color-600);
+    display: flex;
+    flex-direction: column;
+    gap: var(--naotech-sizing-4);
+  }
+}
