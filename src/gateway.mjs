@@ -29,6 +29,13 @@ export const SESSION = {
   secondEventId: 8
 };
 
+// Segundo evento de la demo: tiene su propio event_id, tipos y acreditados.
+export const INTERCOLEGIADOS = {
+  eventCode: 'c1a2b3d4-0000-4000-8000-000000000010',
+  eventName: 'Juegos Intercolegiados 2026',
+  eventId: 20
+};
+
 const json = (route, status, body) =>
   route.fulfill({
     status,
@@ -65,6 +72,11 @@ export async function interceptGateway(page) {
         event_code: 'c1a2b3d4-0000-4000-8000-000000000009',
         name: 'Clásica de Atletismo',
         start_date: '2026-11-03T08:00:00Z'
+      },
+      {
+        event_code: INTERCOLEGIADOS.eventCode,
+        name: INTERCOLEGIADOS.eventName,
+        start_date: '2026-10-12T08:00:00Z'
       }
     ],
     roles: [
@@ -309,6 +321,18 @@ export async function interceptGateway(page) {
     unexpected: []
   };
 
+  // Datos propios de Juegos Intercolegiados 2026 (event_id distinto al de Nacionales).
+  state.roles.push(
+    { code: 'ic000000-0000-4000-8000-000000000001', id: 30, role_name: 'Deportista escolar', role_code: 'ATHLETE', event_id: INTERCOLEGIADOS.eventId, is_active: true, permissions: [] },
+    { code: 'ic000000-0000-4000-8000-000000000002', id: 31, role_name: 'Docente acompañante', role_code: 'DOCENTE', event_id: INTERCOLEGIADOS.eventId, is_active: true, permissions: [] },
+    { code: 'ic000000-0000-4000-8000-000000000003', id: 32, role_name: 'Delegado', role_code: 'DELEGADO', event_id: INTERCOLEGIADOS.eventId, is_active: true, permissions: [] }
+  );
+  state.accreditations.push(
+    { code: 'ic111111-0000-4000-8000-000000000001', event_id: INTERCOLEGIADOS.eventId, user_code: 'user-ic-valentina', document_number: '1020304050', full_name: 'Valentina Ospina Cardona', department_name: 'CALDAS', role_code: 'ATHLETE', role_name: 'Deportista escolar', status: 'ACTIVE', permissions_total: 2, uses_consumed: 0, created_at: '2026-10-02T10:00:00.000Z' },
+    { code: 'ic111111-0000-4000-8000-000000000002', event_id: INTERCOLEGIADOS.eventId, user_code: 'user-ic-samuel', document_number: '1030405060', full_name: 'Samuel Herrera Quintero', department_name: 'SANTANDER', role_code: 'ATHLETE', role_name: 'Deportista escolar', status: 'ACTIVE', permissions_total: 2, uses_consumed: 0, created_at: '2026-10-03T10:00:00.000Z' },
+    { code: 'ic111111-0000-4000-8000-000000000003', event_id: INTERCOLEGIADOS.eventId, user_code: 'user-ic-marta', document_number: '52111222', full_name: 'Marta Lucía Gaviria Toro', department_name: 'RISARALDA', role_code: 'DOCENTE', role_name: 'Docente acompañante', status: 'ACTIVE', permissions_total: 1, uses_consumed: 0, created_at: '2026-10-03T11:00:00.000Z' }
+  );
+
   // Las rutas se prueban en orden y la primera que coincide contesta.
   const routes = [
     ['GET', /^\/v1\/auth\/me$/, ({ route }) => json(route, 200, SESSION)],
@@ -336,10 +360,13 @@ export async function interceptGateway(page) {
     [
       'GET',
       /^\/v1\/event\/[^/]+$/,
-      ({ route }) =>
+      ({ route, url }) =>
         json(route, 200, {
-          event_code: SESSION.eventCode,
-          name: SESSION.eventName,
+          event_code: url.pathname.split('/').pop(),
+          name:
+            url.pathname.split('/').pop() === INTERCOLEGIADOS.eventCode
+              ? INTERCOLEGIADOS.eventName
+              : SESSION.eventName,
           phases: [
             {
               code: SESSION.phaseCode,
@@ -368,6 +395,19 @@ export async function interceptGateway(page) {
       /^\/v1\/accreditation\/events$/,
       ({ route, url }) => {
         const phaseCode = url.searchParams.get('phase_code');
+        const askedEvent = url.searchParams.get('event_code');
+
+        if (askedEvent === INTERCOLEGIADOS.eventCode) {
+          return json(route, 200, {
+            data: [
+              {
+                id: INTERCOLEGIADOS.eventId,
+                event_code: INTERCOLEGIADOS.eventCode,
+                phase_code: phaseCode ?? SESSION.phaseCode
+              }
+            ]
+          });
+        }
 
         return json(route, 200, {
           data: [

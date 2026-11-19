@@ -1,0 +1,378 @@
+/* Resumen · Vista A. Toma el lugar del Resumen compilado en /delivery/summary. */
+#resumen-a[hidden]{display:none}
+html.res-a #root{display:none}
+html.con-shell #resumen-a{position:relative;margin-left:var(--ish-w);padding-top:var(--ish-h);padding-bottom:76px;box-sizing:border-box;min-height:100vh;transition:margin-left .36s cubic-bezier(.32,.72,0,1)}
+html.con-shell.shell-colapsado #resumen-a{margin-left:var(--ish-wc)}
+html.con-shell:not(.shell-listo) #resumen-a{transition:none}
+@media (max-width:899px){html.con-shell #resumen-a{margin-left:0;padding-top:0}}
+
+.rsa-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.rsa-stats{grid-template-columns:repeat(4,minmax(0,1fr))}
+.rsa-filters{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.rsa-field{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600;color:var(--naotech-app-color-700)}
+.rsa-field select{appearance:none;-webkit-appearance:none;height:40px;min-width:200px;padding:0 40px 0 12px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23646587' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:8px;background-color:#fff;color:var(--naotech-color-gray-900,#282834);font:inherit;font-size:14px;font-weight:400}
+.rsa-field select:focus-visible,.rsa-seg button:focus-visible,.rsa-chips button:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+.rsa-seg{display:flex;flex-wrap:wrap;gap:4px;padding:4px;background:var(--naotech-color-gray-100,#f5f6fa);border-radius:10px}
+.rsa-seg button{min-height:32px;padding:0 14px;border:0;border-radius:8px;background:transparent;color:var(--naotech-app-color-700);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
+.rsa-seg button[aria-pressed=true]{background:#fff;color:var(--naotech-color-gray-900,#282834);box-shadow:var(--naotech-shadow-small,0 1px 4px rgba(0,0,0,.08))}
+.rsa-chips{display:flex;flex-wrap:wrap;gap:6px}
+.rsa-chips button{min-height:32px;padding:0 12px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:999px;background:#fff;color:var(--naotech-app-color-800);font:inherit;font-size:13px;cursor:pointer}
+.rsa-chips button[aria-pressed=true]{border-color:var(--naotech-color-orange-700,#d74009);background:var(--naotech-color-orange-050,#fff3e6);color:var(--naotech-color-orange-700,#d74009);font-weight:600}
+.rsa-roles{height:14px;border-radius:7px;overflow:hidden;display:flex;background:var(--naotech-color-gray-200,#e7e9f3)}
+.rsa-sub{font-size:12px;font-weight:600;color:var(--naotech-app-color-700)}
+.rsa-empty{width:100%;justify-content:center;text-align:center;padding:28px 16px;color:var(--naotech-app-color-700)}
+.rsa-block{display:flex;flex-direction:column;gap:10px}
+.rsa-blockhead{display:flex;flex-direction:column;gap:2px}
+.rsa-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.rsa-nodep{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.rsa-nodep div{display:flex;flex-direction:column;gap:2px}.rsa-nodep b{font-size:14px;font-weight:600}.rsa-nodep small{font-size:12px;color:var(--naotech-app-color-700)}
+.rsa-big{font-size:22px;font-weight:700}
+.rsa-foot{margin:0}
+@media (max-width:899px){.rsa-stats{grid-template-columns:1fr}}
+#resumen-a .nws-delivery__content{display:flex;flex-direction:column;gap:20px;padding:28px 32px 0;box-sizing:border-box}
+#resumen-a .nws-summary__table-head{display:flex;align-items:center;justify-content:space-between}
+#resumen-a .nwt-progress-bar__fill[style*="width:0%"],#resumen-a .nwt-progress-bar__fill[style*="width: 0%"]{display:none}
+
+/* Generadas por rol · propuesta limpia: barra con segmentos separados, leyenda en columnas con la cifra protagonista */
+#resumen-a .rsa-rolcard{border:0;box-shadow:0 1px 3px rgba(145,158,171,.08),0 6px 16px rgba(145,158,171,.1)}
+#resumen-a .rsa-rolcard .nwt-card__content{display:flex;flex-direction:column;gap:18px}
+.rsa-rolhead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.rsa-roltotal{font-size:13px;color:var(--naotech-app-color-700)}
+.rsa-roltotal b{font-size:13px;font-weight:700;color:var(--naotech-color-gray-900,#282834)}
+.rsa-rolbar{display:flex;gap:4px;height:12px}
+.rsa-rolbar span{display:block;border-radius:6px;transition:flex .3s ease,opacity .2s}
+.rsa-rollegend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none}
+.rsa-rollegend li{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--naotech-color-gray-200,#e7e9f3);transition:opacity .2s}
+.rsa-rollabel{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--naotech-app-color-700)}
+.rsa-rollabel .nws-summary__dot{flex:none}
+.rsa-rolnum{display:flex;align-items:baseline;gap:8px}
+.rsa-rolnum b{font-size:22px;font-weight:700;line-height:1.1;letter-spacing:-.01em;color:var(--naotech-color-gray-900,#282834)}
+.rsa-rolnum small{font-size:12px;color:var(--naotech-app-color-600,#646587)}
+@media (max-width:899px){.rsa-rollegend{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (prefers-reduced-motion:reduce){.rsa-rolbar span,.rsa-rollegend li{transition:none}}
+
+/* Dropdown anidado: Rol con deporte */
+.rsa-dd{position:relative}
+.rsa-dd__btn{display:flex;align-items:center;justify-content:space-between;gap:12px;height:40px;min-width:200px;padding:0 12px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:8px;background:#fff;color:var(--naotech-color-gray-900,#282834);font:inherit;font-size:14px;font-weight:400;cursor:pointer;text-align:left}
+.rsa-dd__btn:focus-visible,.rsa-dd__opt:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+.rsa-dd__btn[aria-expanded=true]{border-color:var(--naotech-color-orange-700,#d74009)}
+.rsa-dd__arrow{color:#646587;flex:none}
+.rsa-dd__chev{transition:transform .2s;flex:none;color:#646587}
+.rsa-dd__chev.is-open{transform:rotate(180deg)}
+.rsa-dd__panel{position:absolute;z-index:30;top:calc(100% + 4px);left:0;min-width:100%;width:max-content;max-width:320px;padding:6px;background:#fff;border-radius:12px;box-shadow:0 0 2px rgba(145,158,171,.2),0 12px 24px -4px rgba(145,158,171,.24)}
+.rsa-dd__opt{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:36px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--naotech-color-gray-900,#282834);font:inherit;font-size:14px;font-weight:400;text-align:left;cursor:pointer}
+.rsa-dd__opt:hover{background:var(--naotech-color-gray-100,#f4f5fa)}
+.rsa-dd__opt.is-on{background:var(--naotech-color-orange-050,#fff3e6);color:var(--naotech-color-orange-700,#d74009);font-weight:600}
+.rsa-dd__sub{margin:2px 0 4px 12px;padding-left:8px;border-left:2px solid var(--naotech-color-gray-200,#e7e9f3)}
+
+/* Tabla "Avance por deporte" · estilo de la referencia (Incentivos): tarjeta sin borde con elevación, cabecera en píldora, filas con divisor fino */
+#resumen-a .nws-summary__table{border:0;border-radius:16px;background:#fff;box-shadow:none;overflow:visible}
+#resumen-a .nws-summary__table .nwt-card__content{padding:20px}
+#resumen-a .nws-summary__table .nwt-datatable,#resumen-a .nws-summary__table .nwt-datatable__table{border:0;border-radius:0;box-shadow:none;background:transparent;overflow:visible}
+#resumen-a .nws-summary__table table{width:100%;border-collapse:separate;border-spacing:0}
+#resumen-a .nws-summary__table thead,#resumen-a .nws-summary__table .nwt-datatable__head{background:transparent}
+#resumen-a .nws-summary__table .nwt-datatable__title{padding:12px 18px;background:#f5f6fa;border:0;font-size:11px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--naotech-color-gray-600,#646587)}
+#resumen-a .nws-summary__table .nwt-datatable__title:first-child{border-radius:12px 0 0 12px}
+#resumen-a .nws-summary__table .nwt-datatable__title:last-child{border-radius:0 12px 12px 0}
+#resumen-a .nws-summary__table .nwt-datatable__cell{padding:14px 18px;font-size:13px;color:var(--naotech-color-gray-900,#282834);background:transparent;border:0;border-bottom:1px solid var(--naotech-color-gray-200,#e7e9f3);vertical-align:middle}
+#resumen-a .nws-summary__table .nws-summary__odd,#resumen-a .nws-summary__table .nws-summary__odd .nwt-datatable__cell,#resumen-a .nws-summary__table .nws-summary__open .nwt-datatable__cell{background:transparent}
+#resumen-a .nws-summary__table tbody tr.nwt-datatable__record:hover .nwt-datatable__cell{background:#fafbfd}
+#resumen-a .nws-summary__table tbody tr:last-child .nwt-datatable__cell{border-bottom:0}
+#resumen-a .nws-summary__table .nws-summary__open .nwt-datatable__cell{border-bottom-color:transparent}
+#resumen-a .nws-summary__table .nws-summary__detail .nwt-datatable__cell,#resumen-a .nws-summary__table tr.nws-summary__detail>td{padding:0;background:#fafbfd;border-bottom:0}
+#resumen-a .nws-summary__table .nws-summary__detail-body{padding:20px 18px 24px}
+#resumen-a .nws-summary__table .nws-summary__metric{border:0;background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(145,158,171,.08),0 4px 12px rgba(145,158,171,.1)}
+#resumen-a .nws-summary__table table{border-collapse:collapse}
+#resumen-a .nws-summary__table tbody tr.nwt-datatable__record{border-bottom:1px solid var(--naotech-color-gray-200,#e7e9f3)}
+#resumen-a .nws-summary__table tbody tr.nwt-datatable__record:has(+ .nws-summary__detail){border-bottom-color:transparent}
+#resumen-a .nws-summary__table tbody tr:last-child{border-bottom:0}
+#resumen-a .nws-summary__table .nwt-datatable__cell{border-bottom:0!important}
+#resumen-a .nws-summary__table .nws-summary__detail-body{padding:20px 18px 24px 18px}
+.rsa-allbtn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--naotech-color-orange-700,#d74009);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.rsa-allbtn:hover{background:transparent;text-decoration:underline}
+.rsa-allbtn:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+/* Fila abierta resaltada; el detalle de abajo en blanco */
+#resumen-a .nws-summary__table tbody tr.nws-summary__open .nwt-datatable__cell{background:#f5f6fa}
+#resumen-a .nws-summary__table tbody tr.nws-summary__open .nwt-datatable__cell:first-child{border-radius:12px 0 0 12px}
+#resumen-a .nws-summary__table tbody tr.nws-summary__open .nwt-datatable__cell:last-child{border-radius:0 12px 12px 0}
+#resumen-a .nws-summary__table .nws-summary__detail .nwt-datatable__cell,#resumen-a .nws-summary__table tr.nws-summary__detail>td{background:#fff}
+#resumen-a .nws-summary__table tbody tr.nws-summary__open .nwt-datatable__cell{border-radius:0!important;box-shadow:none}
+#resumen-a .nws-summary__table tbody tr.nws-summary__open .nwt-datatable__cell:first-child{border-radius:12px 0 0 12px!important}
+#resumen-a .nws-summary__table tbody tr.nws-summary__open .nwt-datatable__cell:last-child{border-radius:0 12px 12px 0!important}
+#resumen-a .nws-summary__table tbody tr.nws-summary__open{background:#f5f6fa;border-radius:12px;border-bottom-color:transparent}
+#resumen-a .nws-summary__table tbody tr.nws-summary__open .nwt-datatable__cell{background:transparent!important;border-radius:0!important}
+.rsa-headtools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rsa-search{position:relative;display:block}
+.rsa-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#646587;pointer-events:none}
+.rsa-search input{height:36px;width:240px;max-width:100%;padding:0 14px 0 38px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:9999px;background:#fff;color:var(--naotech-color-gray-900,#282834);font:inherit;font-size:14px;box-sizing:border-box}
+.rsa-search input::placeholder{color:#8b8da8}
+.rsa-search input:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px;border-color:transparent}
+/* Cabecera de la tabla: título arriba; debajo, buscador a la izquierda y plegar/desplegar a la derecha */
+#resumen-a .nws-summary__table-head{flex-direction:column;align-items:stretch;justify-content:flex-start;gap:12px}
+#resumen-a .rsa-headtools{justify-content:space-between;flex-wrap:nowrap}
+#resumen-a .rsa-headtools .rsa-allbtn{margin-left:auto}
+
+.rsa-warn{font-size:13px;color:var(--naotech-color-orange-700,#d74009);font-weight:600}
+@media (max-width:1199px){.rsa-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:899px){.rsa-stats{grid-template-columns:1fr}}
+#resumen-a .nws-summary__table .nwt-datatable__title{white-space:normal;line-height:1.25;overflow:visible;text-overflow:clip}
+
+/* Detalle del deporte: una cifra protagonista + tres de apoyo, barra única y los roles como lista compacta */
+.rsa-d{display:flex;flex-direction:column;gap:20px;padding:20px 18px 24px}
+.rsa-d__kpis{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:24px}
+.rsa-d__kpi{display:flex;flex-direction:column;gap:4px;min-width:0}
+.rsa-d__kpi span{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--naotech-color-gray-600,#646587)}
+.rsa-d__kpi b{font-size:22px;font-weight:700;line-height:1.1;letter-spacing:-.01em;color:var(--naotech-color-gray-900,#282834)}
+.rsa-d__kpi--main b{font-size:36px}
+.rsa-d__kpi small{font-size:12px;color:var(--naotech-color-gray-600,#646587)}
+.rsa-d .nws-summary__stack{height:10px;border-radius:5px}
+.rsa-d__roles{display:flex;flex-direction:column}
+.rsa-d__rhead,.rsa-d__rrow{display:grid;grid-template-columns:2fr 1fr 1fr 2fr;gap:16px;align-items:center;padding:10px 0}
+.rsa-d__rhead{padding-top:0;font-size:11px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;color:var(--naotech-color-gray-600,#646587);border-bottom:1px solid var(--naotech-color-gray-200,#e7e9f3)}
+.rsa-d__rrow{font-size:13px;color:var(--naotech-color-gray-900,#282834);border-bottom:1px solid var(--naotech-color-gray-200,#e7e9f3)}
+.rsa-d__rrow:last-child{border-bottom:0;padding-bottom:0}
+.rsa-d__rname{font-weight:500}
+.rsa-d__rbar{display:flex;align-items:center;gap:10px}
+.rsa-d__rbar i{flex:1;height:6px;border-radius:3px;background:var(--naotech-color-gray-200,#e7e9f3);overflow:hidden}
+.rsa-d__rbar u{display:block;height:100%;border-radius:3px;background:var(--naotech-color-green-700,#1f8923)}
+.rsa-d__rbar em{font-style:normal;font-size:12px;min-width:36px;text-align:right;color:var(--naotech-color-gray-600,#646587)}
+@media (max-width:899px){.rsa-d__kpis{grid-template-columns:1fr 1fr}}
+/* Detalle contenido en un recuadro para separarlo de las filas de los demás deportes; los roles solo con cifras */
+.rsa-d{margin:4px 18px 20px;padding:20px 24px 22px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:12px;background:#fff}
+.rsa-d__rpct{font-weight:600}
+.rsa-d__rhead span:nth-child(n+2),.rsa-d__rrow>span:nth-child(n+2){text-align:right}
+.rsa-d__rhead,.rsa-d__rrow{grid-template-columns:2fr 1fr 1fr 1fr}
+
+/* Detalle sin recuadro: cifras en fichas grises, barra, y roles con cabecera en píldora y guía vertical a la izquierda */
+.rsa-d{margin:0;padding:16px 18px 24px;border:0;border-radius:0;background:#fff;gap:16px}
+.rsa-d__kpis{gap:16px}
+.rsa-d__kpi{padding:14px 18px;border-radius:16px;background:#f5f6fa}
+.rsa-d__roles{gap:0}
+.rsa-d__rhead{padding:12px 18px;border:0;border-radius:12px;background:#f5f6fa}
+.rsa-d__rrow{padding:14px 18px;margin-left:0;border-left:3px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:0}
+.rsa-d__rrow:last-child{padding-bottom:14px}
+.rsa-d__rrow+.rsa-d__rrow{margin-top:0}
+.rsa-d__rhead+.rsa-d__rrow{margin-top:6px}
+
+/* Barra de herramientas dentro de la tarjeta, sobre la cabecera de columnas (como la referencia de Incentivos) */
+#resumen-a .nws-summary__table{border:1px solid var(--naotech-color-gray-200,#e7e9f3)}
+#resumen-a .nws-summary__table>.nwt-card__body>.nwt-card__content{display:flex;flex-direction:column;gap:18px}
+#resumen-a .nws-summary__table .rsa-headtools{width:100%;justify-content:space-between;gap:16px}
+#resumen-a .nws-summary__table .rsa-search input{height:44px;width:340px;padding:0 16px 0 46px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:9999px;font-size:15px}
+#resumen-a .nws-summary__table .rsa-search svg{left:16px;width:20px;height:20px}
+#resumen-a .nws-summary__table .rsa-allbtn{height:44px;padding:0 16px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:8px;color:var(--naotech-color-gray-900,#282834);font-weight:500}
+#resumen-a .nws-summary__table .rsa-allbtn:hover{text-decoration:none;border-color:var(--naotech-color-gray-600,#646587)}
+#resumen-a .nws-summary__table .rsa-allbtn svg{color:var(--naotech-color-gray-600,#646587)}
+
+/* Pie de tabla con paginado */
+.rsa-pager{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:2px;font-size:13px;color:var(--naotech-color-gray-600,#646587)}
+.rsa-pager__ctl{display:flex;align-items:center;gap:10px}
+.rsa-pager__ctl b{color:var(--naotech-color-gray-900,#282834);font-weight:600}
+.rsa-pager__in{width:56px;height:36px;padding:0 8px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:8px;background:#fff;color:var(--naotech-color-gray-900,#282834);font:inherit;font-size:14px;text-align:center;box-sizing:border-box;-moz-appearance:textfield}
+.rsa-pager__in::-webkit-outer-spin-button,.rsa-pager__in::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.rsa-pager__btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:8px;background:#fff;color:var(--naotech-color-gray-900,#282834);cursor:pointer}
+.rsa-pager__btn:hover:not(:disabled){border-color:var(--naotech-color-gray-600,#646587)}
+.rsa-pager__btn:disabled{opacity:.4;cursor:not-allowed}
+.rsa-pager__in:focus-visible,.rsa-pager__btn:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+/* DC-007: columna «Cupos asignados» primero en la lista por rol */
+.rsa-d__rhead,.rsa-d__rrow{grid-template-columns:2fr 1fr 1fr 1fr 1fr}
+/* DC-006: la fila abierta queda blanca y separada del detalle por una línea gris */
+#resumen-a .nws-summary__table tbody tr.nws-summary__open{background:#fff;border-radius:0;border-bottom:1px solid var(--naotech-color-gray-300,#d0d4e6)}
+#resumen-a .nws-summary__table tbody tr.nws-summary__open .nwt-datatable__cell{background:transparent!important}
+#resumen-a .nws-summary__table tbody tr.nwt-datatable__record.nws-summary__open:has(+ .nws-summary__detail){border-bottom:1px solid var(--naotech-color-gray-300,#d0d4e6)}
+/* Un solo borde: el de .nwt-card__body del SDK */
+#resumen-a .nws-summary__table{border:0;border-radius:20px}
+
+/* Sin deporte: mismas tarjetas de indicador que las de arriba */
+.rsa-sin{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.rsa-sin__it{display:flex;transition:opacity .2s}
+.rsa-sin__it>.nwt-stat-card{flex:1;min-width:0}
+
+/* DC-008: «Desplegar/Plegar todos» como antes, sin contorno ni fondo */
+#resumen-a .nws-summary__table .rsa-allbtn{height:36px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:var(--naotech-color-orange-700,#d74009);font-weight:600}
+#resumen-a .nws-summary__table .rsa-allbtn:hover{text-decoration:underline;border:0}
+#resumen-a .nws-summary__table .rsa-allbtn svg{color:currentColor}
+/* DC-009: tooltip de los segmentos de la barra por rol */
+.rsa-rolbar span[data-tip]{cursor:default}
+.rsa-rolbar span[data-tip]:hover,.rsa-rolbar span[data-tip]:focus-visible{outline:2px solid var(--naotech-color-gray-900,#282834);outline-offset:1px;opacity:1!important}
+.rsa-tip{position:fixed;z-index:1000;display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:#282834;color:#fff;font-size:12px;box-shadow:0 8px 24px rgba(40,40,52,.25);pointer-events:none;white-space:nowrap}
+.rsa-tip[hidden]{display:none}
+.rsa-tip i{width:10px;height:10px;border-radius:50%;flex:none}
+.rsa-tip span{display:flex;flex-direction:column;gap:2px}
+.rsa-tip b{font-weight:600}
+.rsa-tip em{font-style:normal;opacity:.8}
+
+/* Barra general por rol: marcadores con icono sobre la barra, porcentajes debajo; el detalle sale al pasar el cursor */
+.rsa-pb{position:relative;padding-top:64px;padding-bottom:44px}
+.rsa-pb__pins{position:absolute;left:0;right:0;top:0;height:64px;pointer-events:none}
+.rsa-pb__pin{position:absolute;bottom:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;pointer-events:auto;cursor:default;transition:opacity .2s}
+.rsa-pb__pin--lo .rsa-pb__stem{height:14px}
+.rsa-pb__pin--hi .rsa-pb__stem{height:34px}
+.rsa-pb__bubble{display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#fff;box-shadow:0 1px 6px rgba(40,40,52,.16)}
+.rsa-pb__bubble .nwt-icon{width:16px;height:16px;font-size:16px;color:currentColor}
+.rsa-pb__stem{display:block;width:2px;background:var(--naotech-color-gray-900,#282834);position:relative;margin-bottom:-3px}
+.rsa-pb__stem::after{content:"";position:absolute;bottom:-3px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--naotech-color-gray-900,#282834);transform:translateX(-50%)}
+.rsa-pb__pin:hover .rsa-pb__bubble,.rsa-pb__pin:focus-visible .rsa-pb__bubble{box-shadow:0 0 0 2px currentColor}
+.rsa-pb__bar{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--naotech-color-gray-200,#e7e9f3)}
+.rsa-pb__bar span{display:block;height:100%;box-shadow:inset -2px 0 0 #fff;transition:opacity .2s,filter .2s}
+.rsa-pb__bar span:last-child{box-shadow:none}
+.rsa-pb__bar span:hover{filter:brightness(1.12)}
+.rsa-pb__labels{position:absolute;left:0;right:0;bottom:0;height:36px}
+.rsa-pb__labels span{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;white-space:nowrap}
+.rsa-pb__labels b{font-size:14px;font-weight:700;color:var(--naotech-color-gray-900,#282834)}
+.rsa-pb__labels small{font-size:12px;color:var(--naotech-color-gray-600,#646587)}
+.rsa-pb__labels span{white-space:normal;max-width:96px;text-align:center;line-height:1.2}
+.rsa-pb{padding-bottom:52px}.rsa-pb__labels{height:46px}
+/* Sin iconos: marcadores en forma de paleta (línea + punto del color del rol) y contenedor más bajo */
+.rsa-pb{padding-top:34px;padding-bottom:50px}
+.rsa-pb__pins{height:34px}
+.rsa-pb__pin--lo .rsa-pb__stem{height:10px}
+.rsa-pb__pin--hi .rsa-pb__stem{height:22px}
+.rsa-pb__stem{width:2px;background:currentColor;margin-bottom:0}
+.rsa-pb__stem::after{display:none}
+.rsa-pb__pin::before{content:"";order:-1;width:10px;height:10px;border-radius:50%;background:currentColor;margin-bottom:-1px}
+.rsa-pb__pin:hover::before,.rsa-pb__pin:focus-visible::before{box-shadow:0 0 0 3px color-mix(in srgb,currentColor 25%,transparent)}
+#resumen-a .rsa-rolcard .nwt-card__content{gap:12px}
+.rsa-rolhead{margin-bottom:0}
+.rsa-stats--5{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media (max-width:1399px){.rsa-stats--5{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:899px){.rsa-stats--5{grid-template-columns:1fr}}
+
+/* ───────── Animaciones ─────────
+   Se activan con data-anim en #resumen-a: «all» al entrar o cambiar filtros/rol, «rows» al paginar.
+   Despliegues y menús llevan su propia clase (--in) y solo animan lo recién abierto. */
+@keyframes rsa-up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes rsa-fade{from{opacity:0}to{opacity:1}}
+@keyframes rsa-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes rsa-drop{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes rsa-open{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+@keyframes rsa-pin{from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%)}}
+
+#resumen-a[data-anim=all] .nws-delivery__content>:nth-child(n+3){animation:rsa-up .5s cubic-bezier(.32,.72,0,1) both}
+#resumen-a[data-anim=all] .nws-delivery__content>:nth-child(3){animation-delay:.04s}
+#resumen-a[data-anim=all] .nws-delivery__content>:nth-child(4){animation-delay:.1s}
+#resumen-a[data-anim=all] .nws-delivery__content>:nth-child(5){animation-delay:.16s}
+#resumen-a[data-anim=all] .nws-delivery__content>:nth-child(6){animation-delay:.22s}
+#resumen-a[data-anim=all] .nws-delivery__content>:nth-child(7){animation-delay:.28s}
+#resumen-a[data-anim=all] .rsa-stats>.nwt-stat-card{animation:rsa-up .5s cubic-bezier(.32,.72,0,1) both}
+#resumen-a[data-anim=all] .rsa-stats>.nwt-stat-card:nth-child(2){animation-delay:.06s}
+#resumen-a[data-anim=all] .rsa-stats>.nwt-stat-card:nth-child(3){animation-delay:.12s}
+#resumen-a[data-anim=all] .rsa-stats>.nwt-stat-card:nth-child(4){animation-delay:.18s}
+#resumen-a[data-anim=all] .rsa-stats>.nwt-stat-card:nth-child(5){animation-delay:.24s}
+/* barra por rol: crece de izquierda a derecha y luego aparecen los marcadores */
+#resumen-a[data-anim=all] .rsa-pb__bar span{transform-origin:left center;animation:rsa-grow .8s cubic-bezier(.32,.72,0,1) both}
+#resumen-a[data-anim=all] .rsa-pb__bar span:nth-child(2){animation-delay:.07s}
+#resumen-a[data-anim=all] .rsa-pb__bar span:nth-child(3){animation-delay:.14s}
+#resumen-a[data-anim=all] .rsa-pb__bar span:nth-child(4){animation-delay:.21s}
+#resumen-a[data-anim=all] .rsa-pb__bar span:nth-child(5){animation-delay:.28s}
+#resumen-a[data-anim=all] .rsa-pb__bar span:nth-child(6){animation-delay:.35s}
+#resumen-a[data-anim=all] .rsa-pb__bar span:nth-child(7){animation-delay:.42s}
+#resumen-a[data-anim=all] .rsa-pb__pin{animation:rsa-pin .5s cubic-bezier(.32,.72,0,1) .55s both}
+#resumen-a[data-anim=all] .rsa-pb__labels span{animation:rsa-fade .5s ease .6s both}
+/* filas de la tabla al entrar y al paginar */
+#resumen-a[data-anim=all] tbody tr.nwt-datatable__record,#resumen-a[data-anim=rows] tbody tr.nwt-datatable__record{animation:rsa-up .4s cubic-bezier(.32,.72,0,1) both}
+#resumen-a[data-anim] tbody tr.nwt-datatable__record:nth-child(1){animation-delay:.2s}
+#resumen-a[data-anim=rows] tbody tr.nwt-datatable__record:nth-child(1){animation-delay:0s}
+#resumen-a[data-anim] tbody tr.nwt-datatable__record:nth-child(3){animation-delay:.26s}
+#resumen-a[data-anim] tbody tr.nwt-datatable__record:nth-child(5){animation-delay:.32s}
+#resumen-a[data-anim] tbody tr.nwt-datatable__record:nth-child(7){animation-delay:.38s}
+#resumen-a[data-anim] tbody tr.nwt-datatable__record:nth-child(9){animation-delay:.44s}
+#resumen-a[data-anim=rows] tbody tr.nwt-datatable__record:nth-child(3){animation-delay:.05s}
+#resumen-a[data-anim=rows] tbody tr.nwt-datatable__record:nth-child(5){animation-delay:.1s}
+#resumen-a[data-anim=rows] tbody tr.nwt-datatable__record:nth-child(7){animation-delay:.15s}
+#resumen-a[data-anim=rows] tbody tr.nwt-datatable__record:nth-child(9){animation-delay:.2s}
+/* barras de avance */
+#resumen-a[data-anim=all] .nwt-progress-bar__fill,#resumen-a .rsa-d--in .nwt-progress-bar__fill,#resumen-a .rsa-d--in .nws-summary__stack-part{transform-origin:left center;animation:rsa-grow .8s cubic-bezier(.32,.72,0,1) .25s both}
+/* detalle de un deporte al desplegarlo */
+#resumen-a .rsa-d--in{animation:rsa-open .38s cubic-bezier(.32,.72,0,1) both}
+#resumen-a .rsa-d--in .rsa-d__kpi{animation:rsa-up .45s cubic-bezier(.32,.72,0,1) both}
+#resumen-a .rsa-d--in .rsa-d__kpi:nth-child(2){animation-delay:.05s}
+#resumen-a .rsa-d--in .rsa-d__kpi:nth-child(3){animation-delay:.1s}
+#resumen-a .rsa-d--in .rsa-d__kpi:nth-child(4){animation-delay:.15s}
+#resumen-a .rsa-d--in .nws-summary__stack{transform-origin:left center;animation:rsa-grow .7s cubic-bezier(.32,.72,0,1) .15s both}
+#resumen-a .rsa-d--in .rsa-d__rrow{animation:rsa-up .4s cubic-bezier(.32,.72,0,1) both}
+#resumen-a .rsa-d--in .rsa-d__rrow:nth-child(2){animation-delay:.18s}
+#resumen-a .rsa-d--in .rsa-d__rrow:nth-child(3){animation-delay:.23s}
+#resumen-a .rsa-d--in .rsa-d__rrow:nth-child(4){animation-delay:.28s}
+#resumen-a .rsa-d--in .rsa-d__rrow:nth-child(5){animation-delay:.33s}
+/* menú de Rol con deporte */
+#resumen-a .rsa-dd__panel--in{transform-origin:top left;animation:rsa-drop .18s cubic-bezier(.32,.72,0,1) both}
+#resumen-a .rsa-dd__sub--in{animation:rsa-open .22s cubic-bezier(.32,.72,0,1) both}
+#resumen-a .rsa-dd__chev{transition:transform .2s cubic-bezier(.32,.72,0,1)}
+/* interacciones suaves */
+#resumen-a .nws-summary__table tbody tr.nwt-datatable__record .nwt-datatable__cell{transition:background .15s}
+#resumen-a .rsa-pb__pin::before{transition:box-shadow .15s,transform .15s}
+#resumen-a .rsa-pb__pin:hover::before{transform:scale(1.25)}
+#resumen-a .nwt-stat-card{transition:transform .2s cubic-bezier(.32,.72,0,1),box-shadow .2s}
+@media (prefers-reduced-motion:reduce){
+  #resumen-a *,#resumen-a *::before,#resumen-a *::after{animation:none!important;transition:none!important}
+}
+/* Sin la ficha de «Impresas y laminadas» */
+.rsa-stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+.rsa-stats--5{grid-template-columns:repeat(4,minmax(0,1fr))}
+.rsa-d__kpis{grid-template-columns:1.2fr 1fr 1fr}
+@media (max-width:1199px){.rsa-stats,.rsa-stats--5{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:899px){.rsa-stats,.rsa-stats--5{grid-template-columns:1fr}.rsa-d__kpis{grid-template-columns:1fr 1fr}}
+/* El avance es de entrega: mismo azul que «Entregadas» */
+#resumen-a .nws-summary__table .nwt-progress-bar__fill{background:var(--naotech-color-blue-700,#1f78d1)}
+/* La sombra de la tarjeta seguía un rectángulo de esquinas rectas: el contenedor toma el mismo radio que el borde interior */
+#resumen-a .nwt-card{border-radius:20px}
+
+/* ───────── Vista B «Con todos los datos» ───────── */
+.rsa-head{align-items:flex-start;gap:12px}
+.rsa-head__tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.rsa-vista{display:inline-flex;gap:4px;padding:4px;border-radius:10px;background:var(--naotech-color-gray-100,#f4f5fa)}
+.rsa-vista button{min-height:36px;padding:0 14px;border:0;border-radius:8px;background:transparent;color:var(--naotech-color-gray-600,#646587);font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s}
+.rsa-vista button[aria-pressed=true]{background:#fff;color:var(--naotech-color-gray-900,#282834);box-shadow:0 1px 3px rgba(40,40,52,.14)}
+.rsa-vista button:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+.rsa-note{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;padding:12px 16px;border-radius:12px;font-size:13px}
+.rsa-note--b{background:var(--naotech-color-blue-050,#eef0ff);color:var(--naotech-color-blue-900,#2a3bb0)}
+.rsa-stats--6{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:899px){.rsa-stats--6{grid-template-columns:1fr}}
+.rsa-leg{display:flex;flex-wrap:wrap;gap:6px 18px;margin:0;padding:0;list-style:none;font-size:12px;color:var(--naotech-color-gray-700,#43445e)}
+.rsa-leg li{display:inline-flex;align-items:center;gap:6px}
+.rsa-leg span{color:var(--naotech-color-gray-600,#646587)}
+.rsa-leg--top{margin-top:2px}
+#resumen-a .nws-summary__table-head{align-items:flex-start}
+.rsa-mini{flex:1;display:flex;height:8px;border-radius:4px;background:var(--naotech-color-gray-200,#e7e9f3);overflow:hidden;min-width:60px}
+.rsa-mini span{display:block;height:100%}
+.rsa-muted{color:var(--naotech-color-gray-600,#646587)}
+.rsa-strong{font-weight:600}
+.rsa-d__kpis--4{grid-template-columns:1.1fr 1fr 1fr 1fr}
+.rsa-d__sub{font-size:12px;font-weight:600;color:var(--naotech-color-gray-600,#646587)}
+.rsa-d__roles--4 .rsa-d__rhead,.rsa-d__roles--4 .rsa-d__rrow{grid-template-columns:2fr 1fr 1fr 1fr 1fr}
+.rsa-d__bar span[data-tip]:hover{filter:brightness(1.12)}
+.rsa-foot{margin:0;padding-top:10px;border-top:1px solid var(--naotech-color-gray-200,#e7e9f3);font-size:12px;color:var(--naotech-color-gray-600,#646587)}
+/* B: el estado de los 9 números cabe en la tarjeta de la tabla */
+#resumen-a .nws-summary__table .nwt-datatable__title{padding-left:10px;padding-right:10px}
+
+/* Vista B: los seis indicadores en una sola fila, más compactos */
+.rsa-stats--6{grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+html.con-shell .rsa-stats--6 .nwt-stat-card{padding:14px 14px 16px;border-radius:14px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__content{gap:8px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__label{padding-right:36px;min-height:32px;font-size:10.5px;letter-spacing:.3px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__value{font-size:24px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__hint{font-size:11.5px;line-height:1.35}
+html.con-shell .rsa-stats--6 .nwt-stat-card__icon{top:12px;right:12px;width:30px;height:30px;border-radius:8px}
+html.con-shell .rsa-stats--6 .nwt-stat-card__icon .nwt-icon{transform:scale(.8)}
+@media (max-width:1199px){.rsa-stats--6{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:899px){.rsa-stats--6{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Limpiar filtros: alineado a la derecha de la tarjeta de filtros */
+.rsa-filters{align-items:flex-end}
+.rsa-clear{margin-left:auto;display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:var(--naotech-color-orange-700,#d74009);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
+.rsa-clear:hover:not(:disabled){text-decoration:underline}
+.rsa-clear:disabled{color:var(--naotech-color-gray-500,#9a9bb8);cursor:not-allowed}
+.rsa-clear:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+
+/* Cabecera: estado junto al nombre del evento y botón «Descargar informe» a la derecha */
+.rsa-evline{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rsa-dl{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid var(--naotech-color-gray-300,#d0d4e6);border-radius:8px;background:#fff;color:var(--naotech-color-gray-900,#282834);font:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:border-color .15s,background .15s}
+.rsa-dl svg{color:var(--naotech-color-gray-600,#646587)}
+.rsa-dl:hover{border-color:var(--naotech-color-gray-600,#646587);background:var(--naotech-color-gray-050,#fafbfd)}
+.rsa-dl:focus-visible{outline:2px solid var(--naotech-color-orange-700,#d74009);outline-offset:2px}
+/* Descargar informe: botón primario naranja */
+.rsa-dl{border-color:transparent;background:var(--naotech-color-orange-700,#d74009);color:#fff}
+.rsa-dl svg{color:#fff}
+.rsa-dl:hover{border-color:transparent;background:var(--naotech-color-orange-800,#b53607)}
+.rsa-dl:focus-visible{outline-color:var(--naotech-color-orange-800,#b53607)}

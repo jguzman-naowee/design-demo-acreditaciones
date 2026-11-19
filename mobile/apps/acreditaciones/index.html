@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo · Acreditaciones</title>
+<script>
+// Base de la app: sirve igual en localhost, bajo /design-demo-acreditaciones/ de GitHub Pages y dentro del marco (/mobile/apps/acreditaciones/index.html).
+var m=location.pathname.match(/^(.*?)(\/(parametrization|delivery|validation|profile)(\/.*)?)?$/);
+window.__BASE__=(m[1]||'').replace(/\/index\.html$/,'').replace(/\/$/,'');
+document.write('<base href="'+(window.__BASE__||'')+'/">');
+</script>
+<script>
+// Demo de un solo evento: se fija «Juegos Intercolegiados 2026» y la entrada cae directo en el Resumen (no hay selector de evento).
+(function(){
+  try{localStorage.setItem('naowee.acreditaciones.active-event',JSON.stringify({code:'c1a2b3d4-0000-4000-8000-000000000010',name:'Juegos Intercolegiados 2026',phaseCode:'fase-elim-1',phaseName:'Fase Eliminatoria'}));}catch(e){}
+  var rel=location.pathname.slice(window.__BASE__.length)||'/';
+  if(rel==='/'||rel==='/index.html')history.replaceState(null,'',window.__BASE__+'/delivery/summary'+location.search+location.hash);
+})();
+</script>
+<link rel="stylesheet" href="assets/styles.css"><link rel="stylesheet" href="assets/components.css"><link rel="stylesheet" href="assets/icons.css">
+<link rel="stylesheet" href="assets/sidebar.css"><link rel="stylesheet" href="assets/google-sans.css"><link rel="stylesheet" href="assets/sidebar-real.css"><link rel="stylesheet" href="assets/app.css"><link rel="stylesheet" href="assets/shell.css"><link rel="stylesheet" href="assets/resumen.css">
+<style>html,body{margin:0;min-height:100%}body{display:flex;min-height:100vh}#sidebar{flex:none;display:flex}#sidebar .ns-sidebar{height:auto;min-height:100vh}#root{flex:1;min-width:0}</style>
+</head><body><div id="sidebar"></div><div id="root"></div><script type="module" src="assets/app.js"></script><script src="assets/shell.js"></script><script src="assets/resumen.js"></script></body></html>

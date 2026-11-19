@@ -1,36 +1,54 @@
 # design-demo-acreditaciones
 
-Demo navegable del módulo de **Acreditaciones** de Sports (suite-web-v2). Corre sin backend: es el
-módulo React real (`suite-mf-accreditations`) compilado con el SDK de Naowee, con el sidebar de Sports
-y un gateway simulado dentro del navegador. Datos ficticios.
+Demo navegable del módulo de **Acreditaciones** de Sports (suite-web-v2), montada en el marco de
+`design-layouts-demos` (el mismo de la web de Metodólogos): ventana de escritorio 16:9, selector de tamaño,
+**Vista plana** y un selector de vista del Resumen («Con los datos de hoy» / «Con todos los datos»).
+Corre sin backend; los datos son ficticios.
 
-## Verlo
+## Correr
 
 ```bash
-python3 -m http.server 4400   # o cualquier servidor estático
-# abrir http://localhost:4400/
+npm run dev          # http://localhost:8770  (otro puerto: PORT=8771 npm run dev)
 ```
 
-Bajo un subdirectorio (GitHub Pages) funciona igual: la base se deduce de la URL y `404.html` es la
-misma `index.html` para que las rutas profundas recarguen bien. Con `http.server` no se puede recargar
-en una ruta profunda; entra siempre por la raíz.
+Abre http://localhost:8770/web/?app=acreditaciones (la raíz redirige ahí). Entra directo al **Resumen**
+del evento «Juegos Intercolegiados 2026»: la demo trabaja con un solo evento y no tiene selector.
 
-## Qué incluye
+## Qué muestra
 
-- Entrada (elegir evento), Permisos de acceso, Tipos de acreditados.
-- Gestión de acreditables, Lista de acreditados, Acreditados del evento, Lotes de carnets, Historial.
-- Validar acceso y Lista de accesos.
-- Las pantallas que en el producto solo existen en modo demo se activan por ruta (`src/shell.ts`).
+- **Resumen de acreditaciones**, con las dos vistas del artefacto de Jorge:
+  - **Con los datos de hoy** (Vista A): generadas, por subsanar y entregadas por deporte, rol y delegación.
+  - **Con todos los datos** (Vista B): del inscrito al carnet entregado, con cupos, impresas y alertas. Cifras ilustrativas.
+  - Filtros de fase (Nacionales, Regional Conjunto, Regional Atletismo), delegación y rol (con deporte / sin deporte), descarga del informe en CSV.
+- El resto de pantallas del módulo (permisos, tipos de acreditados, gestión de acreditables, lista de acreditados,
+  lotes, historial, validar acceso y lista de accesos) son el módulo React real compilado.
 
-No incluye la barra superior de Sports ni los Certificados de participación (no hay ruta en el micro).
+## Cómo está armado
 
-## Cómo está hecho
+- `web/index.html`: el marco (cabecera, tamaño de pantalla, Vista plana y el selector de vistas). No sabe nada de Acreditaciones.
+- `mobile/apps/acreditaciones/`: la demo (`app.json` y la app). `app.json` declara `"vistas"` y `"casos": false` (sin recorrido guiado por ahora).
+- `mobile/apps/index.js`: lo genera `npm run registrar`; no se edita.
+- `RULES.md`: reglas del marco. `mobile/` (marco del teléfono) viene del marco original y no se usa aquí.
 
-- `src/gateway.mjs`: contrato del gateway copiado de `suite-mf-accreditations/e2e/lib/gateway.mjs`.
-  Si el contrato cambia allá, se vuelve a copiar.
+### La app (`mobile/apps/acreditaciones/`)
+
+| Archivo | Qué hace |
+|---|---|
+| `index.html` | La app. Calcula su base también dentro del marco, fija el evento y entra al Resumen. |
+| `assets/app.js` | El módulo compilado con un gateway simulado en el navegador (sin servicios). |
+| `assets/shell.*` | Menú lateral, encabezado y pie (diseño de Incentivos, con tokens del SDK). |
+| `assets/resumen.*` | Resumen de acreditaciones en JS plano; la vista la elige el marco con `window.ResumenVista.set(id)`. |
+
+### Código fuente del bundle (`src/`)
+
+- `src/gateway.mjs`: contrato del gateway copiado de `suite-mf-accreditations/e2e/lib/gateway.mjs`. Si el contrato cambia allá, se vuelve a copiar.
 - `src/gateway-browser.ts`: lo conecta a `XMLHttpRequest` (el transporte del SDK).
-- `src/shell.ts`: sidebar con el markup de `ns-sidebar` y la bandera de demo.
-- `assets/`: CSS y fuentes de `sdk-frontend-foundations` y el bundle compilado (`app.js`, `app.css`).
+- `src/shell.ts`: bandera de demo y markup del sidebar compilado (queda oculto: lo reemplaza `assets/shell.*`).
+
+## Cambios respecto del marco original
+
+- `scripts/dev.mjs`: una URL profunda de una app sin hash (p. ej. `/delivery/summary`) sirve el `index.html` de esa app.
+- `web/index.html`: `app.json` puede declarar `"vistas"` (selector segmentado) y `"casos": false` (oculta Casos).
 
 ## Recompilar
 
@@ -38,3 +56,10 @@ No incluye la barra superior de Sports ni los Certificados de participación (no
 # en suite-mf-accreditations: NPM_TOKEN=$(gh auth token) npm install
 SUITE_MF_ACCREDITATIONS=~/Naowee/suite-mf-accreditations node scripts/build.mjs
 ```
+
+Ojo: recompilar sobrescribe `mobile/apps/acreditaciones/assets/app.js`. El evento «Juegos Intercolegiados 2026» viene de `src/gateway.mjs`, pero lo demás (`shell.*`, `resumen.*`) es JS plano y no se toca.
+
+## Pendiente
+
+- Estados de la plataforma (cargando, error, sin conexión, vacío): en el marco original los implementa cada app.
+- Recorrido guiado (Casos): se quitó por ahora; el marco ya soporta `casos.js` + `web-casos.js`.
