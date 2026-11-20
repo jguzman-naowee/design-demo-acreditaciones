@@ -31,6 +31,9 @@ html.con-shell:not(.shell-listo) #root,html.con-shell:not(.shell-listo) .ish-top
 .ish-bar{position:absolute;left:-6px;top:8px;width:4px;height:28px;background:var(--ish-accent);border-radius:25px;animation:ishBar .42s cubic-bezier(.16,1,.3,1) both}
 @keyframes ishBar{0%{opacity:0;transform:translateX(-8px) scaleY(.2)}55%{opacity:1}100%{opacity:1;transform:none}}
 .ish-row.on,.ish-row.on:hover{background:transparent}
+.ish-row--off,.ish-row--off:hover{cursor:default;background:none}
+.ish-row--off .ish-lbl{margin-left:64px;color:var(--ish-soft);font-weight:500}
+.shell-colapsado .ish-row--off{display:none}
 .ish-row.on .ish-lbl{color:var(--ish-accent)}
 .ish-row.on .ish-icon{color:var(--ish-accent)}
 .ish-bottom{padding:8px 0;border-top:1px solid var(--ish-border)}
