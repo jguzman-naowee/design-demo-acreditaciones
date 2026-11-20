@@ -27,11 +27,11 @@
     swap: svg('<path d="M4 8h14M14 4l4 4-4 4M20 16H6M10 12l-4 4 4 4"/>'),
   };
 
-  // Sección → ítems [etiqueta, ruta, ícono]. Sin ruta = fuera de la demo: se ve pero no navega.
+  // Sección → ítems [etiqueta, ruta, ícono]. Solo Resumen navega: el resto se ve normal pero no tiene acción.
   const NAV = [
-    { s: 'Parametrización', c: [['Permisos de acceso', '/parametrization/access-permissions', 'key'], ['Tipos de acreditados', '/parametrization/accredited-types', 'tags']] },
+    { s: 'Parametrización', c: [['Permisos de acceso', '', 'key'], ['Tipos de acreditados', '', 'tags']] },
     { s: 'Entrega de acreditaciones', c: [['Resumen', '/delivery/summary', 'chart'], ['Gestión de acreditables'], ['Lista de acreditados'], ['Acreditados del evento'], ['Lotes de acreditaciones'], ['Historial de movimientos']] },
-    { s: 'Validación', c: [['Validar acceso', '/validation/validate', 'scan'], ['Lista de accesos', '/validation/access-control', 'door']] }
+    { s: 'Validación', c: [['Validar acceso', '', 'scan'], ['Lista de accesos', '', 'door']] }
   ];
 
   const rel = () => location.pathname.slice(base.length) || '/';
@@ -46,7 +46,7 @@
   root.classList.add('con-shell');
 
   const row = (m) => {
-    if (!m[1]) return `<span class="ish-row ish-row--off" aria-disabled="true"><span class="ish-lbl">${esc(m[0])}</span></span>`;
+    if (!m[1]) return `<span class="ish-row ish-row--static${m[2] ? '' : ' ish-row--noicon'}">${m[2] ? `<div class="ish-icon">${I[m[2]]}</div>` : ''}<span class="ish-lbl">${esc(m[0])}</span></span>`;
     const act = on(m[1]);
     return `<a class="ish-row${act ? ' on' : ''}" href="${base}${m[1]}" data-go="${m[1]}" title="${esc(m[0])}" aria-label="${esc(m[0])}"${act ? ' aria-current="page"' : ''}>${act ? '<div class="ish-bar"></div>' : ''}<div class="ish-icon">${I[m[2]]}</div><span class="ish-lbl">${esc(m[0])}</span></a>`;
   };
